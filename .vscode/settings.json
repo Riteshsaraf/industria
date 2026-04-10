@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/fce2edb8-509e-47f1-8a5a-105f2f7ceb69/resourceGroups/rg-exc-app-smartreq-dev-001/providers/Microsoft.Web/sites/az-app-smartreq-wfe-dev",
+    "appService.deploySubpath": ".next\\standalone"
+}

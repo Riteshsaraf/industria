@@ -1,0 +1,222 @@
+import { NextResponse } from "next/server";
+
+const backendUrl = process.env.BACKEND_API_URL;
+
+// Simulate backend API or database fetch
+async function fetchFormFromDB(id: string) {
+  // Replace with your actual DB call
+
+  console.log({ idParam: id });
+  if (id !== "new") {
+    const backendRes = await fetch(`${backendUrl}/api/form/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await backendRes.json();
+
+    return data;
+  }
+  return null;
+}
+
+export async function GET(
+  req: Request,
+  context: { params: { id: string } | Promise<{ id: string }> },
+) {
+  try {
+    // If params is a Promise, unwrap it
+    const params =
+      "then" in context.params ? await context.params : context.params;
+    const { id } = params;
+
+    const { searchParams } = new URL(req.url);
+
+    const page = Number(searchParams.get("page")) || 1;
+    const pageSize = Number(searchParams.get("pageSize")) || 10;
+
+    if (id && id !== "list" && id !== "new") {
+      const data = await fetchFormFromDB(id);
+
+      return NextResponse.json(
+        {
+          data,
+        },
+        { status: 200 },
+      );
+    }
+
+    const backendRes = await fetch(
+      `${backendUrl}/api/form/list?page=${page}&pageSize=${pageSize}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+
+    const data = await backendRes.json();
+
+    if (!backendRes.ok) {
+      return NextResponse.json(
+        { message: data.message || "Invalid credentials" },
+        { status: 400 },
+      );
+    }
+
+    // SUCCESS
+    return NextResponse.json(
+      {
+        forms: data.data,
+        totalCount: data.totalCount,
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Server error", error },
+      { status: 500 },
+    );
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { FORM_LAYOUT, FORM_TEMPLATE_NAME, PROVIDER_TYPE_ID, PROVINCE_ID } =
+      body;
+
+    const stringJSON = JSON.stringify({
+      FORM_LAYOUT,
+      FORM_TEMPLATE_NAME,
+      PROVIDER_TYPE_ID,
+      PROVINCE_ID,
+    });
+
+    console.log({ body, stringJSON });
+    const backendRes = await fetch(`${backendUrl}/api/form/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: stringJSON,
+    });
+
+    const raw = await backendRes.text();
+
+    console.log({ raw });
+
+    if (!backendRes.ok) {
+      return NextResponse.json(
+        { message: raw || "Invalid requests" },
+        { status: 400 },
+      );
+    }
+
+    // SUCCESS
+    return NextResponse.json(
+      {
+        message: raw,
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.log({ error });
+
+    return NextResponse.json(
+      { message: "Server error", error },
+      { status: 500 },
+    );
+  }
+}
+
+export async function PATCH(
+  req: Request,
+  context: { params: { id: string } | Promise<{ id: string }> },
+) {
+  try {
+    const body = await req.json();
+
+    // If params is a Promise, unwrap it
+    const params =
+      "then" in context.params ? await context.params : context.params;
+    const { id } = params;
+
+    const { FORM_LAYOUT, FORM_TEMPLATE_NAME } = body;
+
+    const stringJSON = JSON.stringify({ FORM_LAYOUT, FORM_TEMPLATE_NAME });
+
+    console.log({ body, stringJSON, id });
+    const backendRes = await fetch(`${backendUrl}/api/form/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: stringJSON,
+    });
+
+    const raw = await backendRes.text();
+
+    console.log({ raw });
+
+    if (!backendRes.ok) {
+      return NextResponse.json(
+        { message: raw || "Invalid requests" },
+        { status: 400 },
+      );
+    }
+
+    // SUCCESS
+    return NextResponse.json(
+      {
+        message: raw,
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.log({ error });
+
+    return NextResponse.json(
+      { message: "Failed to update form", error },
+      { status: 500 },
+    );
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  context: { params: { id: string } | Promise<{ id: string }> },
+) {
+  try {
+    // If params is a Promise, unwrap it
+    const params =
+      "then" in context.params ? await context.params : context.params;
+    const { id } = params;
+
+    const backendRes = await fetch(`${backendUrl}/api/form/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const raw = await backendRes.text();
+
+    console.log({ raw });
+
+    if (!backendRes.ok) {
+      return NextResponse.json(
+        { message: raw || "Invalid requests" },
+        { status: 400 },
+      );
+    }
+
+    // SUCCESS
+    return NextResponse.json(
+      {
+        message: raw,
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.log({ error });
+
+    return NextResponse.json(
+      { message: "Failed to delete form", error },
+      { status: 500 },
+    );
+  }
+}
