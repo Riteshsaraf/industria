@@ -20,10 +20,19 @@ export default function Sidebar() {
   const menu : menuItem[] = [
     { label: "Home", href: "/home" },
       {
-          label: "Tests",
+          label: "Category",
           children: [
-              { label: "Create Master Test", href: "/tests/new" },
-              { label: "Update Master Test", href: "/test-list" },
+              { label: "Create Category", href: "/category/new" },
+              { label: "Update Category", href: "/category-list" },
+          ],
+      },
+      { label: "Company", href: "/company" },
+
+      {
+          label: "Project",
+          children: [
+              { label: "Create Project", href: "/project/new" },
+              { label: "Update Project", href: "/project-list" },
           ],
       },
   ];

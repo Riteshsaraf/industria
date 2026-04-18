@@ -16,18 +16,22 @@ export default function NavBar({children, userName, onLogout, routeLink}: NavBar
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const hideNavbarFor: string[] = [];
+  const hideNavbarFor: string[] = ["admin-login", "login", "user"];
   
   console.log({ hideNavbarFor });
 
   let pathArraysInclude = false;
 
   let pathHide = (): boolean => {
+
+    console.log({ pathname });
     pathname.split("/").forEach((a) => {
       if (hideNavbarFor.includes(a)) {
         pathArraysInclude = true;
       }
     });
+
+    console.log({ pathArraysInclude });
 
     return pathArraysInclude;
   };

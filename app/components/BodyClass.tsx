@@ -4,10 +4,10 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export default function BodyClass() {
-    const pathname = usePathname();
-    const adminPaths = ["/home", "/form-builder", "/form-list", "/form-requisition",  "/patient-form-requisition", "/link-form", "/link-form-list", "/provider-types", "/provinces", "/test-catalogue", "/test-catalogue-list", "/test-list", "/tests"];
+  const pathname = usePathname();
+  const adminPaths = ["/home", "/category", "/category-list","/company","/project","/project-list"];
 
-    console.log({ pathname });
+  console.log({ pathname });
 
   useEffect(() => {
     // remove old class

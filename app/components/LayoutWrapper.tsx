@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AdminAuthContext";
+import Image from 'next/image';
+
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
  const { user, logout, isAuthenticated } = useAuth()
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
-    const hideNavbarFor: string[] = [];
+    const hideNavbarFor: string[] = ['login'];
 
     console.log({ hideNavbarFor });
 
@@ -20,19 +22,25 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
             }
         });
 
+        console.log({ pathArraysInclude });
+
         return pathArraysInclude;
-    }            ;
+    }        
+
+
 
     const hideNavbar = pathHide() ;
 
   return (
     <>
       {!hideNavbar && (<nav className="w-full h-14 px-2 py-2 bg-white flex items-center justify-between border-b border-gray-300">
-           <img 
-            src="/lifelab_logo.png" 
-            alt="next tool Logo"
-            className="h-10 w-20"
-          />
+           <Image
+                    src="/images/admin-logo.jpeg"
+                    alt="Banner"
+                    width={20}
+                    height={20}
+                    className="w-20 h-10"
+                />
 
               <div className="relative">
                   {/* Toggle button */}

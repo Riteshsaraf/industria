@@ -9,39 +9,37 @@ type Params = {
     id: string
 }
 
-export default function TestsPage() {
+export default function CategoryPage() {
 
     const { setLoading } = useLoader();
     const [loading, setLoadingState] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [success, setSuccess] = useState(false);
-    const [testCategories, setTestCategories] = useState([]);
-    const [price, setPrice] = useState(1);
+    const [parentCategory, setParentCategory] = useState([]);
     const params = useParams<Params>();
     const id = params.id as string;
     const inputRef = useRef<HTMLInputElement>(null);
 
       const [form, setForm] = useState({
-            TEST_NAME: "",
-            TEST_COMMENTS: "",
-            TEST_CATEGORY_ID: 1,
-            TEST_MNEMONIC_CODE: "",
-            TEST_SCHEDULE_CODE: "",
-            TEST_PRICE : 1
+            name: "",
+            description: "",
+            slug: "",
+            parentId : ""
       });
 
 
     // Fetch providerTypes
-    async function loadTestCategories() {
+    async function loadparentCategory() {
         try {
             setLoading(true);
-            const res = await fetch("/api/testCategory/list");
+            const res = await fetch("/api/category/list");
 
             console.log({ res });
 
             const data = await res.json();
-            setTestCategories(data.testCategories);
+            setParentCategory(data.data);
+            // setForm((prev)=>({...prev,parentId : data.data[0].id}));
         }
         catch (error: any) {
             setError(true);
@@ -54,15 +52,16 @@ export default function TestsPage() {
     }
 
     useEffect(() => {
-        loadTestCategories();
+        loadparentCategory();
     }, []);
 
 
     // Fetch user if edit
     useEffect(() => {
         if (id.toLowerCase() !== 'new') {
+
             const fetchDetail = async () => {
-                const res = await fetch(`/api/tests/${id}`);
+                const res = await fetch(`/api/category/${id}`);
 
                 console.log({ res });
 
@@ -70,12 +69,10 @@ export default function TestsPage() {
                 const data = resData.data;
 
                 setForm({
-                    TEST_NAME: data.tesT_NAME,
-                    TEST_COMMENTS: data.tesT_COMMENTS,
-                    TEST_PRICE: data.tesT_PRICE,
-                    TEST_MNEMONIC_CODE: data.tesT_MNEMONIC_CODE,
-                    TEST_SCHEDULE_CODE: data.tesT_SCHEDULE_CODE,
-                    TEST_CATEGORY_ID : data.tesT_CATEGORY_ID
+                    name: data.name,
+                    description: data.description,
+                    slug: data.slug,
+                    parentId: data.parentId
                 });
             }
 
@@ -89,9 +86,8 @@ export default function TestsPage() {
 
   // Create User
   async function handleSubmit(e: any) {
-        e.preventDefault();
+      e.preventDefault();
       
-
       try {
           setLoading(true);
           setLoadingState(true);
@@ -100,7 +96,7 @@ export default function TestsPage() {
           const parsedData = JSON.parse(formData);
 
           if (id.toLowerCase() === 'new') {
-              const res = await fetch("/api/tests/new", {
+              const res = await fetch("/api/category/new", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(parsedData),
@@ -113,19 +109,17 @@ export default function TestsPage() {
               }
 
               setForm({
-                  TEST_NAME: "",
-                  TEST_COMMENTS: "",
-                  TEST_CATEGORY_ID: 1,
-                  TEST_MNEMONIC_CODE: "",
-                  TEST_SCHEDULE_CODE: "",
-                  TEST_PRICE: 1
+                  name: "",
+                  description: "",
+                  slug: "",
+                  parentId: ""
               });
 
           }
           else {
               //Call an Update api
 
-              const res = await fetch("/api/tests/" + params.id, {
+              const res = await fetch("/api/category/" + params.id, {
                   method: "PATCH",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(parsedData),
@@ -153,31 +147,7 @@ export default function TestsPage() {
       }
   }
 
-    const checkPrice = (value: number) => {
-
-        if (value<=0) {
-            setError(true);
-            setErrorMessage('Test price should not be negative!');
-            setTimeout(() => setError(false), 3000); // hide after 3s
-
-            setPrice(1);
-            return;
-        }
-
-        setForm({ ...form, TEST_PRICE: value });
-    }
-
-    const checkComments = (value: string) => {
-        if (value.length > 400) {
-            setError(true);
-            setErrorMessage('Test comments should not be more than 200 characters!');
-            setTimeout(() => setError(false), 3000); // hide after 3s
-
-            return;
-        }
-        setForm({ ...form, TEST_COMMENTS: value })
-    }
-
+    
   return (
 
     <div className="flex min-h-screen h-screen">
@@ -207,26 +177,24 @@ export default function TestsPage() {
           <main className="flex-1 bg-gray-100 p-6 overflow-y-auto h-[calc(100vh-3.5rem)]">
              <div className="flex items-center justify-between">
                   <h1 className="text-[18px] font-semibold mb-4">
-                      {id !== 'new' ? 'Update Test' : 'Create Test' }
+                      {id !== 'new' ? 'Update Category' : 'Create Category' }
                   </h1>
              </div>
             
             <div className="p-6 bg-white rounded shadow">
-
-
                   <form
                       onSubmit={handleSubmit}
                       className=" w-full max-w-md"
                   >
                       <div className="flex flex-col gap-3">
                           <div>
-                              <label className="text-sm block mb-1">Test Name</label>
+                              <label className="text-sm block mb-1">Name</label>
                           <input
                               ref={inputRef}
-                              name="TEST_NAME"
-                              value={form.TEST_NAME}
+                              name="categoryName"
+                              value={form.name}
                               onChange={(e) =>
-                                  setForm({ ...form, TEST_NAME: e.target.value })
+                                  setForm({ ...form, name: e.target.value })
                               }
                               className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
                               placeholder="Name"
@@ -235,87 +203,50 @@ export default function TestsPage() {
                           </div>
 
                           <div>
-                              <label className="text-sm block mb-1">Test Category</label>
-                          <select
-                              name="TEST_CATEGORY"
-                              value={form.TEST_CATEGORY_ID}
-                              onChange={(e:any) =>
-                                  setForm({ ...form, TEST_CATEGORY_ID: e.target.value })
-                              }
-                              className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                          >
-                              {
-                                  testCategories.map((p:any) => {
-                                      return (<option key={p.tesT_CATEGORY_ID} value={p.tesT_CATEGORY_ID}>{p.tesT_CATEGORY_NAME}</option>)
-                                  })
-                              }
+                              <label className="text-sm block mb-1">Category</label>
+                                <select
+                                    name="parentCategory"
+                                    value={form.parentId}
+                                    onChange={(e:any) =>
+                                        setForm({ ...form, parentId: e.target.value })
+                                    }
+                                    className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                >
+                                <option key="select-category" value="select-category" selected>Select category</option>
+                                {
+                                    parentCategory.map((p:any) => {
+                                        return (<option key={p.id} value={p.id}>{p.name}</option>)
+                                    })
+                                }
                               </select>
                           </div>
 
                           <div>
-                              <label className="text-sm block mb-1">Test Comments</label>
-                          <textarea
-                              name="TEST_COMMENTS"
-                              value={form.TEST_COMMENTS}
-                              onChange={(e: any) =>
-                                  checkComments(e.target.value)
-                                  
-                              }
-                              className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                              placeholder="Comments"
-                              />
+                              <label className="text-sm block mb-1">Description</label>
+                              <textarea
+                                    name="description"
+                                    value={form.description}
+                                    onChange={(e) =>
+                                        setForm({ ...form, description: e.target.value })
+                                    }
+                                    className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                    placeholder="Description"
+                                    />
                           </div>
-
                           <div>
-                              <label className="text-sm block mb-1">Test Mnemonic Code</label>
-                          <input
-                              name="TEST_MNEMONIC_CODE"
-                              value={form.TEST_MNEMONIC_CODE}
-                              onChange={(e:any) =>
-                                  setForm({ ...form, TEST_MNEMONIC_CODE: e.target.value })
+                              <label className="text-sm block mb-1">Slug</label>
+                             <input
+                              ref={inputRef}
+                              name="slug"
+                              value={form.slug}
+                              onChange={(e) =>
+                                  setForm({ ...form, slug: e.target.value })
                               }
                               className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                              placeholder="Mnemonic code"
-                              type="text"
-                              required
-                              />
-                           </div>
-
-
-                          <div>
-                              <label className="text-sm block mb-1">Test Schedule Code</label>
-                          <input
-                              name="TEST_SCHEDULE_CODE"
-                              value={form.TEST_SCHEDULE_CODE}
-                              onChange={(e:any) =>
-                                  setForm({ ...form, TEST_SCHEDULE_CODE: e.target.value })
-                              }
-                              className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                              placeholder="Schedule code"
-                              type="text"
+                              placeholder="Slug"
                               required
                               />
                           </div>
-
-                          <div>
-                              <label className="text-sm block mb-1">Test Price</label>
-                          <input
-                              name="TEST_PRICE"
-                              value={price}
-                              onChange={(e: any) =>
-                                      setPrice(e.target.value)
-                              }
-                              onBlur={(e: any) => checkPrice(e.target.value)}
-                              className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                              placeholder="Price"
-                              type="number"
-                              required
-                              />
-                          </div>
-
-
-
-
                           <div className="flex justify-end gap-2 pt-3">
                               
                               <button

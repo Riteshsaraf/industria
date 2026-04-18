@@ -8,8 +8,8 @@ import { useRef } from "react";
 import { useLoader } from "@/context/LoaderContext"; 
 import Link from "next/link";
 
-export default function TestsPage() {
-  const [tests, setTests] = useState([]);
+export default function CategoryListPage() {
+  const [categoy, setCategory] = useState([]);
     const { setLoading } = useLoader();
     const [file, setFile] = useState<File | null>(null);
     const [message, setMessage] = useState("");
@@ -22,7 +22,7 @@ export default function TestsPage() {
     const handlePageChange = (page:number) => {
         if (page >= 1 && page <= totalPages) {
             setCurrentPage(page);
-            loadTests(page);
+            loadCategories(page);
         }
     };
 
@@ -50,7 +50,7 @@ export default function TestsPage() {
             setLoading(true);
             setMessage("");
 
-            const res = await fetch(`/api/tests/import`, {
+            const res = await fetch(`/api/categoy/import`, {
                 method: "POST",
                 body: formData,
             });
@@ -63,7 +63,7 @@ export default function TestsPage() {
 
             const data = await res.json();
             const allRecords = JSON.parse(data.message);
-            setMessage(`${allRecords.length} tests imported successfully`);
+            setMessage(`${allRecords.length} categoy imported successfully`);
 
             handlePageChange(1);
         } catch (err:any) {
@@ -73,17 +73,17 @@ export default function TestsPage() {
         }
     };
 
-    // Fetch tests
-    async function loadTests(pg=1) {
+    // Fetch categoy
+    async function loadCategories(pg=1) {
         try {
             setLoading(true);
-            const res = await fetch(`/api/tests/list?page=${pg}&pageSize=${pageSize}`);
+            const res = await fetch(`/api/category/list?page=${pg}&pageSize=${pageSize}`);
 
             console.log({ res });
 
             const data = await res.json();
-            setTests(data.tests);
-            setTotalPages(Math.ceil(data.totalCount / pageSize));
+            setCategory(data.data);
+            setTotalPages(Math.ceil(data.meta.total / pageSize));
         }
         catch (error: any) {
             setError(true);
@@ -97,21 +97,21 @@ export default function TestsPage() {
     }
 
 
-    // Fetch tests
+    // Fetch categoy
     async function exportTests() {
-        const res = await fetch(`/api/tests/export`);
+        const res = await fetch(`/api/categoy/export`);
 
         const blob = await res.blob();
 
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "tests.xlsx";
+        a.download = "categoy.xlsx";
         a.click();
     }
 
   useEffect(() => {
-    loadTests();
+    loadCategories();
   }, []);
 
     const changeFile = (e: any) => {
@@ -123,10 +123,10 @@ export default function TestsPage() {
 
   // Delete User
   async function handleDelete(id: string) {
-    await fetch(`/api/tests/${id}`, {
+    await fetch(`/api/categoy/${id}`, {
       method: "DELETE",
     });
-    loadTests();
+    loadCategories();
   }
 
   return (
@@ -153,7 +153,7 @@ export default function TestsPage() {
           {/* Main Content */}
           <main className="flex-1 bg-gray-100 p-6  ">
              <div className="flex items-center justify-between mb-4">
-                  <h1 className="text-[18px] font-semibold mb-4">Tests</h1>
+                  <h1 className="text-[18px] font-semibold mb-4">categoy</h1>
 
                   <div className="flex justify-end">
                       <input
@@ -200,46 +200,43 @@ export default function TestsPage() {
                               <tr className="text-sm">
                                 {/*<th className="text-left px-4 py-3">#</th>*/}
                                 <th className="text-left px-4 py-3">Name</th>
-                                <th className="text-left px-4 py-3">Category</th>
+                                <th className="text-left px-4 py-3">Parent Category</th>
                                 
-                                <th className="text-left px-4 py-3">Mnemonic Code</th>
-                                  <th className="text-left px-4 py-3">Schedule Code</th>
-                                  <th className="text-left px-4 py-3">Test Price</th>
-                                  <th className="text-left px-4 py-3">Comments</th>
+                                <th className="text-left px-4 py-3">description</th>
+                                  <th className="text-left px-4 py-3">slug</th>
                                 <th className="text-right px-4 py-3"></th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            {tests.length === 0 ? (
+                            {categoy.length === 0 ? (
                                   <tr key={'no-test'}>
                                 <td
                                     colSpan={5}
                                     className="text-center py-6 text-gray-500 text-sm"
                                 >
-                                    No tests found.
+                                    No categoy found.
                                 </td>
                                 </tr>
                             ) : (
-                                tests.map((u: any) => (
+                                categoy.map((u: any) => (
                                 <tr key={u.tesT_ID} className="border-t border-gray-300 hover:bg-gray-50 text-sm">
                                         {/*<td className="px-4 py-3">{u.tesT_ID}</td>*/}
-                                        <td className="px-4 py-3 w-[250px]">{u.tesT_NAME}</td>
-                                        <td className="px-4 py-3">{u.tesT_CATEGORY_NAME}</td>
+                                        <td className="px-4 py-3 w-[250px]">{u.name}</td>
+                                        <td className="px-4 py-3">{u.parentId}</td>
                                        
-                                        <td className="px-4 py-3">{u.tesT_MNEMONIC_CODE}</td>
-                                        <td className="px-4 py-3">{u.tesT_SCHEDULE_CODE}</td>
-                                        <td className="px-4 py-3">{u.tesT_PRICE}</td>
-                                        <td className="px-4 py-3 w-50 whitespace-normal break-words break-all">{u.tesT_COMMENTS}</td>
+                                        <td className="px-4 py-3">{u.description}</td>
+                                        <td className="px-4 py-3">{u.slug}</td>
+
                                         <td className="px-4 py-3 text-right ">
                                             <div className="inline-flex">
-                                                <Link href={`/tests/${u.tesT_ID}`}>
+                                                <Link href={`/category/${u.id}`}>
 
                                                     <button className="p-1 rounded hover:bg-gray-100 cursor-pointer">
                                                         <Edit size={18} color="#13499f" />
                                                     </button>
                                                 </Link>
-                                                <button onClick={() => handleDelete(u.tesT_ID)} className="text-red-500 cursor-pointer">
+                                                <button onClick={() => handleDelete(u.id)} className="text-red-500 cursor-pointer">
                                                     <Trash2 size={16} />
                                                 </button>
                                             </div>

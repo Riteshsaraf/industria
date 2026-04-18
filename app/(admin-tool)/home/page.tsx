@@ -36,19 +36,19 @@ export default function DashboardPage() {
 
                       {/* Card 3 */}
                       <DashboardCard
-                          title="Manage Tests"
-                          subtitle="manage tests"
+                          title="Manage Category"
+                          subtitle="manage category"
                           icon={Brackets}
-                          link={'/tests/new'}
+                          link={'/category/new'}
                       />
 
 
                       {/* Card 2 */}
                       <DashboardCard
-                          title="Manage Test Catalogues"
-                          subtitle="Create a test catalogues"
+                          title="Manage Company info"
+                          subtitle="Create a company info"
                           icon={ListCheck}
-                          link={'/test-catalogue/new'}
+                          link={'/company'}
                       />
                   </div>
 

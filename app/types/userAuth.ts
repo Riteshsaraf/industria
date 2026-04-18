@@ -5,9 +5,8 @@
 // }
 
 export interface LoginRequest {
-	userId: string;
+	email: string;
 	password: string;
-	province: string;
 }
 
 export interface ApiError{
