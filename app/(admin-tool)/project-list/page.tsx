@@ -9,7 +9,7 @@ import { useLoader } from "@/context/LoaderContext";
 import Link from "next/link";
 
 export default function ProjectListPage() {
-  const [project, setCategory] = useState([]);
+  const [project, setProjects] = useState([]);
     const { setLoading } = useLoader();
     const [file, setFile] = useState<File | null>(null);
     const [message, setMessage] = useState("");
@@ -82,7 +82,8 @@ export default function ProjectListPage() {
             console.log({ res });
 
             const data = await res.json();
-            setCategory(data.data);
+            console.log({data});
+            setProjects(data.data);
             setTotalPages(Math.ceil(data.meta.total / pageSize));
         }
         catch (error: any) {
@@ -220,17 +221,17 @@ export default function ProjectListPage() {
                                 </tr>
                             ) : (
                                 project.map((u: any) => (
-                                <tr key={u.tesT_ID} className="border-t border-gray-300 hover:bg-gray-50 text-sm">
+                                <tr key={u.id} className="border-t border-gray-300 hover:bg-gray-50 text-sm">
                                         {/*<td className="px-4 py-3">{u.tesT_ID}</td>*/}
-                                        <td className="px-4 py-3 w-[250px]">{u.name}</td>
+                                        <td className="px-4 py-3 w-[250px]">{u.title}</td>
                                         <td className="px-4 py-3">{u.categoryId}</td>
                                        
                                         <td className="px-4 py-3">{u.description}</td>
-                                        <td className="px-4 py-3">{u.thumbail}</td>
+                                        <td className="px-4 py-3">{<img src={u.thumbnail} width={20} height={10}/>}</td>
 
                                         <td className="px-4 py-3 text-right ">
                                             <div className="inline-flex">
-                                                <Link href={`/category/${u.id}`}>
+                                                <Link href={`/project/${u.id}`}>
 
                                                     <button className="p-1 rounded hover:bg-gray-100 cursor-pointer">
                                                         <Edit size={18} color="#13499f" />

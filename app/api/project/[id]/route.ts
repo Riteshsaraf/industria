@@ -10,7 +10,7 @@ async function fetchFormFromDB(id: string) {
     console.log({ idParam: id });
     if (id !== "new") {
 
-        const backendRes = await fetch(`${backendUrl}/project/${id}`, {
+        const backendRes = await fetch(`${backendUrl}/projects/${id}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" }
         });
@@ -47,7 +47,7 @@ export async function GET(req: Request, context: { params: { id: string } | Prom
             );
         }
 
-        const url = id ==='search' ? `${backendUrl}/project?search=${search}page=${page}&limit=${pageSize}` : `${backendUrl}/project?page=${page}&limit=${pageSize}`;
+        const url = id ==='search' ? `${backendUrl}/projects?search=${search}page=${page}&limit=${pageSize}` : `${backendUrl}/projects?page=${page}&limit=${pageSize}`;
 
         console.log({url});
 
@@ -68,7 +68,8 @@ export async function GET(req: Request, context: { params: { id: string } | Prom
         // SUCCESS
         return NextResponse.json(
             {
-                data : data.data
+                data : data.data,
+                meta: data.meta
             },
             { status: 200 }
         );
@@ -86,11 +87,11 @@ export async function POST(req: Request) {
         const body = await req.json();
         const { name, categoryId, description, thumbnail, videoLink } = body;
 
-        const backendRes = await fetch(`${backendUrl}/project`, {
+        const backendRes = await fetch(`${backendUrl}/projects`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                categoryId,
+                categoryId: Number(categoryId),
                 name,
                 description,
                 thumbnail,
@@ -137,11 +138,11 @@ export async function PATCH(req: Request, context: { params: { id: string } | Pr
 
         const { categoryId,name, description,thumbnail, videoLink } = body;
 
-        const backendRes = await fetch(`${backendUrl}/project/`+id, {
+        const backendRes = await fetch(`${backendUrl}/projects/`+id, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                categoryId,
+                categoryId : Number(categoryId),
                 name,
                 description,
                 thumbnail,
@@ -182,7 +183,7 @@ export async function DELETE(req: Request, context: { params: { id: string } | P
         const params = "then" in context.params ? await context.params : context.params;
         const { id } = params;
 
-        const backendRes = await fetch(`${backendUrl}/project/`+ id, {
+        const backendRes = await fetch(`${backendUrl}/projects/`+ id, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
         });

@@ -41,7 +41,7 @@ export default function Sidebar() {
       <>
       
           <nav
-              className={`text-white transition-all duration-300  bg-white border border-gray-300
+              className={`text-white transition-all duration-300  bg-black border-t border-gray-300
         ${isOpen ? "text-[#13499f] w-64" : "w-0"}`}>
              
               {menu.map((item: menuItem) => {
@@ -50,7 +50,7 @@ export default function Sidebar() {
                   const isOpen = openMenu === item.label;
 
                   return (
-                      <div key={item.label}>
+                      <div key={item.label}  className="m-2">
                           {/* Parent menu */}
                           {item.children ? (
                               <button
@@ -58,10 +58,10 @@ export default function Sidebar() {
                                       setOpenMenu(isOpen ? null : item.label)
                                   }
                                   className={cn(
-                                      "w-full flex justify-between items-center px-4 py-3 rounded-lg text-sm font-medium transition",
+                                      "w-full flex justify-between items-center px-4 py-3 rounded text-sm font-medium transition",
                                       active
-                                          ? "bg-white"
-                                          : "text-[#13499f] hover:bg-[#13499f] hover:text-white"
+                                          ? "bg-white text-black"
+                                          : "text-white hover:bg-white hover:text-black"
                                   )}
                               >
                                   <span>{item.label}</span>
@@ -73,8 +73,8 @@ export default function Sidebar() {
                                   className={cn(
                                       "block px-4 py-3 rounded-lg text-sm font-medium transition",
                                       active
-                                          ? "bg-blue-100 text-[#13499f]"
-                                          : "text-[#13499f] hover:bg-[#13499f] hover:text-white"
+                                          ? "bg-white text-black"
+                                          : "text-white hover:bg-white hover:text-black"
                                   )}
                               >
                                   {item.label}
@@ -94,8 +94,8 @@ export default function Sidebar() {
                                               className={cn(
                                                   "block px-4 py-2 rounded-md text-sm transition",
                                                   subActive
-                                                      ? "bg-blue-100 text-[#13499f]"
-                                                      : "text-[#13499f] hover:bg-[#13499f] hover:text-white"
+                                                    ? "bg-white text-black"
+                                                    : "text-white hover:bg-white hover:text-black"
                                               )}
                                           >
                                               {sub.label}
@@ -113,8 +113,8 @@ export default function Sidebar() {
           <button
               onClick={() => setIsOpen(!isOpen)}
               className={`absolute  top-25 w-12 h-12 rounded-full 
-        bg-blue-600 text-white flex items-center justify-center 
-        shadow-lg hover:bg-blue-700 transition
+        bg-gray-600 text-white flex items-center justify-center 
+        shadow-lg hover:bg-[pink] transition
         ${isOpen ? "left-58 z-50" : "left-1 z-50"}`}
           >
               {isOpen ? <ChevronLeft size={18}/> : <ChevronRight size={18}/>}

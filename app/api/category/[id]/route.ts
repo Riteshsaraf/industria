@@ -68,7 +68,8 @@ export async function GET(req: Request, context: { params: { id: string } | Prom
         // SUCCESS
         return NextResponse.json(
             {
-                data : data.data
+                data : data.data,
+                meta: data.meta
             },
             { status: 200 }
         );

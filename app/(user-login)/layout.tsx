@@ -9,10 +9,7 @@ export default function ExternalUserLayout({
   children: React.ReactNode;
 }) {
   return (
-    <UserAuthProvider>
-      <UserAuthShield>
+   
         <div>{children}</div>
-      </UserAuthShield>
-    </UserAuthProvider>
   );
 }

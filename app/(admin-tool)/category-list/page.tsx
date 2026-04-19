@@ -123,7 +123,7 @@ export default function CategoryListPage() {
 
   // Delete User
   async function handleDelete(id: string) {
-    await fetch(`/api/categoy/${id}`, {
+    await fetch(`/api/category/${id}`, {
       method: "DELETE",
     });
     loadCategories();

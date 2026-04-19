@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
         turbopackUseSystemTlsCerts: true,
     },
     output: 'standalone',
+    images: {
+        domains: ['picsum.photos'],
+    },
 };
 
 export default nextConfig;

@@ -33,7 +33,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
 
   return (
     <>
-      {!hideNavbar && (<nav className="w-full h-14 px-2 py-2 bg-white flex items-center justify-between border-b border-gray-300">
+      {!hideNavbar && (<nav className="w-full h-14 px-2 py-2 bg-black text-white flex items-center justify-between">
            <Image
                     src="/images/admin-logo.jpeg"
                     alt="Banner"
@@ -47,7 +47,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                   <button
                       onClick={() => setOpen(!open)}
                       className="flex items-center gap-2 px-3 py-2 rounded-lg
-               hover:bg-gray-100 transition"
+               hover:bg-gray-100 hover:text-black transition"
                   >
                       {/* Avatar */}
                       <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
@@ -86,7 +86,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                   {
                       open && (
                           <div
-                              className="absolute right-0 mt-2 w-48 bg-white rounded-lg
+                              className="absolute right-0 mt-2 w-48 bg-white text-black rounded-lg
                border border-gray-200 shadow-lg"
                           >
                               <a
