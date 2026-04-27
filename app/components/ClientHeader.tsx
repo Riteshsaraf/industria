@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { X } from 'lucide-react';
+import Link from "next/link";
 
 export default function ClientHeader() {
   const [open, setOpen] = useState(false);
@@ -10,33 +11,35 @@ export default function ClientHeader() {
   return (
     <>
       {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 bg-black text-white">
-        <div className="flex items-center justify-between px-4 py-3">
+     
+        <div className="flex items-center justify-between px-6">
           
           {/* Logo */}
-          <div className="text-lg font-semibold">
-             <Image
-                                src={"/images/admin-logo.jpeg"}
+          <div className="text-lg font-semibold relative top-0 left-0 px-6 py-2">
+             <Link href="/">
+             <Image className="py-6"
+                                src={"/images/logo_studios_medium_cente.png"}
                                 alt="Banner"
-                                width={20}
-                                height={20}
-                                className="w-20 h-10"
+                                width={301}
+                                height={59}
                             />
+                            </Link>
           </div>
 
           {/* Hamburger */}
+          <div className="relative w-62px  text-white top-0 right-0 -mt-7">
           <button
             onClick={() => setOpen(true)}
-            className="flex flex-col gap-1.5"
+            className="flex flex-col gap-2"
             aria-label="Open menu"
           >
-            <span className="h-0.5 w-6 bg-white"></span>
-            <span className="h-0.5 w-6 bg-white"></span>
-            <span className="h-0.5 w-6 bg-white"></span>
+            <span className="h-1 rounded-lg w-10 bg-white"></span>
+            <span className="h-1 rounded-lg w-10 bg-white"></span>
+            <span className="h-1 rounded-lg w-10 bg-white"></span>
           </button>
+          </div>
         </div>
-      </header>
-
+     
       {/* Modal Overlay */}
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
@@ -56,7 +59,7 @@ export default function ClientHeader() {
             <nav className="flex flex-col gap-2 mt-6 font-bold">
                 <a href="#" className="hover:text-gray-400 transition">
                     <Image
-                                src={"/images/white-logo.jpeg"}
+                                src={"/images/shadow.png"}
                                 alt="Banner"
                                 width={50}
                                 height={50}

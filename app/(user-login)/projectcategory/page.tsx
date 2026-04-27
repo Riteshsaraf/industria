@@ -16,11 +16,15 @@ type Card = {
   thumbnail: string;
 };
 
-const cards: Card[] = Array.from({ length: 8 }).map((_, i) => ({
+const allImages = ['/images/work_1.png','/images/work_2.png','/images/work_3.png','/images/work_4.png','/images/work_5.png','/images/work_6.png']
+const allVidoeName = ["THE MANDALORIAN & GROGU","UNDER SALT MARSH", "AVATAR: FIRE AND ASH","PALESTINE 36","THE TESTAMENT OF ANNE LEE","THE DEATH OF BUNNY MUNRO"];
+
+const cards: Card[] = Array.from({ length: 6 }).map((_, i) => ({
   id: i + 1,
-  title: `Video ${i + 1}`,
-  thumbnail: `https://picsum.photos/400/250?random=${i + 1}`,
+  title: allVidoeName[i],
+  thumbnail: allImages[i],
 }));
+
 
 export default function ContentPage() {
     const [open, setOpen] = useState(false);

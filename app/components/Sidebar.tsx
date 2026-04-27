@@ -27,7 +27,13 @@ export default function Sidebar() {
           ],
       },
       { label: "Company", href: "/company" },
-
+{
+          label: "Client",
+          children: [
+              { label: "Create Client", href: "/client/new" },
+              { label: "Update Client", href: "/client-list" },
+          ],
+      },
       {
           label: "Project",
           children: [

@@ -31,9 +31,10 @@ export default function BranchesSection() {
               className="rounded-lg bg-black p-6 shadow-md"
             >
               {/* City */}
-              <h3 className="text-xl font-bold mb-4">
+              <h2 className="text-2xl font-bold mb-4">
                 {branch.city}
-              </h3>
+
+              </h2>
 
               {/* Contact Info */}
               <div className="space-y-2 text-gray-300 mb-4">

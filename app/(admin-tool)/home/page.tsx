@@ -50,7 +50,16 @@ export default function DashboardPage() {
                           icon={ListCheck}
                           link={'/company'}
                       />
+
+                       {/* Card 3 */}
+                      <DashboardCard
+                          title="Manage Clients"
+                          subtitle="Create a client"
+                          icon={ListCheck}
+                          link={'/client/new'}
+                      />
                   </div>
+
 
         </div>
       </main>

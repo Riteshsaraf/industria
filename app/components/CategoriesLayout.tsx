@@ -1,73 +1,105 @@
-'use client';
+import { useState } from "react";
+import ClientHeader from "./ClientHeader";
+import { redirect } from "next/dist/server/api-utils";
+import Link from "next/link";
 
-import { useState } from 'react';
 
 type Category = {
   id: number;
   name: string;
+  subCategories?: Category[],
+  open?: boolean
 };
 
 type Props = {
-  gridLayout?: boolean; // 👈 optional
+  activeId?: string; // 👈 optional
 };
 
-export default function CategoriesLayout({ gridLayout = false }: Props) {
-  const categories: Category[] = [
-    { id: 1, name: 'Web Development' },
-    { id: 2, name: 'Mobile Apps' },
-    { id: 3, name: 'UI/UX Design' },
-    { id: 4, name: 'Branding' },
-  ];
+  const categories = [
+    {
+        "id" :1,
+        "name": "PRODUCTION",
+        "subCategories" : [
+            {"id": 1, "name" : "BTS"},
+            {"id": 2, "name" : "CONTENT DAYS"},
+            {"id": 3, "name" : "JUNKETS"},
+            {"id": 4, "name" : "EVENTS"},
+            {"id": 5, "name" : "PODCASTS"}
+        ],
+        open: true
+    },
+    {
+         "id" :2,
+        "name": "DIGITAL/SOCIAL",
+        "subCategories": [],
+        open: false
+    },
+   {
+     "id" :3,
+         "name" : "CREATORS",
+         "subCategories": [],
+         open: false
+   },
+   {
+     "id" :4,
+        "name" : "TRAILERS",
+        "subCategories": [],
+        open: false
+   },
+   {
+        "id" :5,
+        "name" : "PHYSICAL MEDIA",
+        "subCategories": [],
+        open: false
+   },
+   {
+        "id" :6,
+        "name" : "ORIGINALS",
+        "subCategories": [],
+        open: false
+   },
+  ]
 
-  const [active, setActive] = useState<number>(1);
-
+export default function CategoryLayoutSection({ activeId = "1" }: Props) {
+    const [allCategories, setAllCategories] = useState<Category[]>(categories);
+    const [activeCategory, setActiveCategory] =  useState<Category>(categories[0]);
+   
+    const setOpen = (index:number, open:boolean)=>{
+          setAllCategories((prev)=>
+              prev.map((item, i) =>
+                i === index ? { ...item, open } : item
+            )
+          );
+    }
+     
   return (
-    <section className="bg-black text-white py-16">
-      <div className="mx-auto max-w-7xl px-4">
+    
 
-        {/* 🔁 Conditional Layout */}
-        <div className={gridLayout ? 'grid md:grid-cols-4 gap-8' : ''}>
-
-          {/* LEFT (only if gridLayout) */}
-          {gridLayout && (
-            <div className="md:col-span-1 border-r border-gray-800 pr-4">
-              <div className="flex flex-col gap-3">
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActive(cat.id)}
-                    className={`text-left px-4 py-2 rounded-md border transition
-                      ${
-                        active === cat.id
-                          ? 'border-white text-white'
-                          : 'border-transparent text-gray-400 hover:border-gray-600 hover:text-white'
-                      }`}
-                  >
-                    {cat.name}
-                  </button>
-                ))}
-              </div>
+        <div className="flex flex-col items-center gap-0 font-bold">
+          {allCategories.map((item, index) => (
+            <>
+              <div
+              key={index}
+              onClick={(e)=>{
+                setActiveCategory(item);
+                setOpen(index, !item.open)
+              }}
+            
+              className={index!==0 ?  `text-md md:text-xl text-gray-500 border border-transparent text-gray-300 transition rounded-md cursor-pointer` : `text-lg md:text-xl text-gray-300 border border-transparent hover:text-white hover:border-white transition rounded-md cursor-pointer`}
+            >
+              {item.name}
             </div>
-          )}
-
-          {/* RIGHT / MAIN CONTENT */}
-          <div className={gridLayout ? 'md:col-span-3' : 'text-center'}>
-            <div className="p-6 border border-gray-800 rounded-lg">
-              
-              <h2 className="text-2xl font-semibold mb-4">
-                {categories.find((c) => c.id === active)?.name}
-              </h2>
-
-              <p className="text-gray-400">
-                Content for selected category goes here.
-              </p>
-
-            </div>
-          </div>
-
+            {
+                   item.open &&  item.subCategories && item?.subCategories.map((item, index) => (
+                       <Link key={index} href={`/work/${item.id}`} 
+                       className="text-sm md:text-sm items-left text-gray-300 border border-transparent hover:text-white hover:border-white transition rounded-md cursor-pointer">
+                         {item.name}
+                          
+                       </Link>
+                  ))
+            }
+            </>
+          ))}
         </div>
-
-      </div>
-    </section>
   );
 }

@@ -1,4 +1,4 @@
-import "@/app/globals.css";
+// import "@/app/globals.css";
 import LayoutWrapper from "@/app/components/LayoutWrapper";
 import BodyClass from "@/app/components/BodyClass";
 import { Poppins } from "next/font/google";

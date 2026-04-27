@@ -1,4 +1,7 @@
 import { useState } from "react";
+import ClientHeader from "./ClientHeader";
+import { redirect } from "next/dist/server/api-utils";
+import Link from "next/link";
 
 
 type Category = {
@@ -70,7 +73,10 @@ export default function CategorySection({ activeId = "1" }: Props) {
     }
      
   return (
-    <section className="bg-black text-white pb-10 pt-20 mt-10">
+    <section className="bg-black text-white pb-10 ">
+
+      <ClientHeader/>
+
       <div className="mx-auto max-w-7xl px-4 text-center">
         
         {/* Category list */}
@@ -89,12 +95,11 @@ export default function CategorySection({ activeId = "1" }: Props) {
             </div>
             {
                    item.open &&  item.subCategories && item?.subCategories.map((item, index) => (
-                        <div
-                        key={index}
-                        className="text-sm md:text-sm text-gray-300 border border-transparent hover:text-white hover:border-white transition rounded-md cursor-pointer"
-                        >
-                        {item.name}
-                        </div>
+                       <Link key={index} href={`/work/${item.id}`} 
+                       className="text-sm md:text-sm text-gray-300 border border-transparent hover:text-white hover:border-white transition rounded-md cursor-pointer">
+                         {item.name}
+                          
+                       </Link>
                   ))
             }
             </>

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export default function BodyClass() {
   const pathname = usePathname();
-  const adminPaths = ["/home", "/category", "/category-list","/company","/project","/project-list"];
+  const adminPaths = ["/home", "/category", "/category-list","/company","/project","/project-list", "/client","/client-list" ];
 
   console.log({ pathname });
 

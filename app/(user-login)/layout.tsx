@@ -2,6 +2,7 @@
 
 import { UserAuthProvider, useUserAuth } from "@/context/UserAuthContext";
 import { UserAuthShield } from "@/app/components/UserAuthShield";
+import { LoaderProvider } from "@/context/LoaderContext";
 
 export default function ExternalUserLayout({
   children,
@@ -9,7 +10,8 @@ export default function ExternalUserLayout({
   children: React.ReactNode;
 }) {
   return (
-   
+    <LoaderProvider>
         <div>{children}</div>
+         </LoaderProvider>
   );
 }

@@ -3,11 +3,7 @@
 import Image from "next/image";
 import { Menu } from "lucide-react";
 import { useState } from "react";
-import ClientsSection from "@/app/components/ClientSection";
-import ClientFooter from "@/app/components/ClientFooter";
 import CategorySection from "@/app/components/CategorySection";
-import BranchesSection from "@/app/components/BranchesSection";
-import ClientHeader from "@/app/components/ClientHeader";
 
 type Card = {
   id: number;
@@ -30,8 +26,7 @@ export default function ContentPage() {
   return (
     <main className="bg-black min-h-screen text-white">
 
-     <ClientHeader/>
-
+     
      <CategorySection/>
 
       {/* Grid Section */}
@@ -41,7 +36,7 @@ export default function ContentPage() {
           {cards.map((card) => (
             <div
               key={card.id}
-              className="bg-zinc-900 rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300"
+              className="bg-zinc-900 rounded-lg overflow-hidden hover:scale-[1.02] transition-transform duration-300"
             >
               <div className="relative w-full h-[120px] md:h-[300px]">
                 <Image
