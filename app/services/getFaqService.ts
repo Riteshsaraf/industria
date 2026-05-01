@@ -1,6 +1,6 @@
 import { FaqItem } from "@/app/types/faq";
 
-const backendUrl = process.env.BACKEND_API_URL;
+const backendUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getFaqs(): Promise<FaqItem[]> {
   try {

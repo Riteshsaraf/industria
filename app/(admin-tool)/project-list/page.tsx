@@ -6,6 +6,7 @@ import Pagination from "@/app/components/Pagination";
 import { Edit, Trash2, Upload, Download } from "lucide-react";
 import { useRef } from "react";
 import { useLoader } from "@/context/LoaderContext"; 
+import Image from "next/image";
 import Link from "next/link";
 
 export default function ProjectListPage() {
@@ -224,10 +225,18 @@ export default function ProjectListPage() {
                                 <tr key={u.id} className="border-t border-gray-300 hover:bg-gray-50 text-sm">
                                         {/*<td className="px-4 py-3">{u.tesT_ID}</td>*/}
                                         <td className="px-4 py-3 w-[250px]">{u.title}</td>
-                                        <td className="px-4 py-3">{u.categoryId}</td>
+                                        <td className="px-4 py-3">{u.category.name}</td>
                                        
                                         <td className="px-4 py-3">{u.description}</td>
-                                        <td className="px-4 py-3">{<img src={u.thumbnail} width={20} height={10}/>}</td>
+                                        <td className="px-4 py-3">
+                                            <Image
+                                                      src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/uploads/${u.thumbnail}`}
+                                                      alt="Banner"
+                                                      width={100}
+                                                        height={100}
+                                                      priority
+                                                    />
+                                        </td>
 
                                         <td className="px-4 py-3 text-right ">
                                             <div className="inline-flex">

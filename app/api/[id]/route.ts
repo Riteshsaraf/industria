@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const backendUrl = process.env.BACKEND_API_URL;
+const backendUrl = process.env.NEXT_PUBLIC_API_URL;
 
 // Simulate backend API or database fetch
 async function fetchFormFromDB(id: string) {

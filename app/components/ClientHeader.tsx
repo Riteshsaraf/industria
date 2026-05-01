@@ -1,12 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { X } from 'lucide-react';
 import Link from "next/link";
+import {
+  Instagram,
+  Facebook,
+  Twitter,
+  Linkedin,
+} from "lucide-react";
+
 
 export default function ClientHeader() {
   const [open, setOpen] = useState(false);
+  const [socialLinks, setSocialLinks] = useState([]);
+
+  useEffect(() => {
+    const companyInfo = localStorage.getItem('companyInfo');
+    if(companyInfo){
+      const parsedInfo = JSON.parse(companyInfo);
+      setSocialLinks(parsedInfo.socialLinks || []);
+    }
+  }, []);
 
   return (
     <>
@@ -50,24 +66,36 @@ export default function ClientHeader() {
             {/* Close */}
             <button
               onClick={() => setOpen(false)}
-              className="absolute right-3 top-3 text-gray-400 hover:text-white"
+              className="absolute right-3 top-3 text-gray-400 hover:text-white cursor-pointer"
             >
-              <X size={18} />
+              <X size={18} className="cursor-pointer"/>
             </button>
 
             {/* Menu Items */}
-            <nav className="flex flex-col gap-2 mt-6 font-bold">
+            <nav className="flex flex-col gap-2 mt-6 font-bold relative top-1/2 -translate-y-1/2">
                 <a href="#" className="hover:text-gray-400 transition">
-                    <Image
-                                src={"/images/shadow.png"}
-                                alt="Banner"
-                                width={50}
-                                height={50}
-                            />
+                    <Image src={"/images/sticker.png"} alt="Sticker" width={100} height={100} className="absolute top-[-50px] left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
                 </a>
               <a href="#" className="hover:text-gray-400 transition">WORK</a>
               <a href="#" className="hover:text-gray-400 transition">ABOUT</a>
               <a href="#" className="hover:text-gray-400 transition">CONTACT</a>
+
+              <div className="flex justify-center gap-6 mb-6">
+          {socialLinks.map((link, index) => (
+            <a
+              key={index}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-400 transition"
+            >
+              {link.type === "instagram" && <Instagram size={20} />}
+              {link.type === "facebook" && <Facebook size={20} />}
+              {link.type === "twitter" && <Twitter size={20} />}
+              {link.type === "linkedin" && <Linkedin size={20} />}
+            </a>
+          ))}
+        </div>
             </nav>
           </div>
 

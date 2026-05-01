@@ -6,7 +6,9 @@ import { useLoader } from "@/context/LoaderContext";
 
 type Branch = {
   name: string;
-  address: string;
+  address1: string;
+  address2: string;
+  email: string;
   contact: string;
 };
 
@@ -213,9 +215,32 @@ export default function CompanyForm() {
             <input
               type="text"
               placeholder="Address"
-              value={branch.address}
+              value={branch.address1}
               onChange={(e) =>
-                handleBranchChange(index, 'address', e.target.value)
+                handleBranchChange(index, 'address1', e.target.value)
+              }
+             className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                              
+            />
+
+             <input
+              type="text"
+              placeholder="Address"
+              value={branch.address2}
+              onChange={(e) =>
+                handleBranchChange(index, 'address2', e.target.value)
+              }
+             className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                              
+            />
+
+
+<input
+              type="text"
+              placeholder="Email"
+              value={branch.email}
+              onChange={(e) =>
+                handleBranchChange(index, 'email', e.target.value)
               }
              className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
                               
@@ -243,7 +268,7 @@ export default function CompanyForm() {
 
         <button
           onClick={addBranch}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded mb-5"
         >
           + Add Branch
         </button>
@@ -255,16 +280,18 @@ export default function CompanyForm() {
 
         {socialLinks.map((social, index) => (
           <div key={index} className="border border-gray-300 p-4 rounded mb-4 space-y-2">
-            <input
-              type="text"
-              placeholder="Type (Facebook, Instagram, etc.)"
-              value={social.type}
-              onChange={(e) =>
-                handleSocialChange(index, 'type', e.target.value)
-              }
-              className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                              
-            />
+            <select
+        value={social.type}
+        onChange={(e) => handleSocialChange(index, 'type', e.target.value)}
+         className="w-full rounded border border-gray-300 px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+             >
+        <option value="" selected disabled>Select platform</option>
+        <option value="instagram">Instagram</option>
+        <option value="facebook">Facebook</option>
+        <option value="twitter">Twitter</option>
+        <option value="linkedin">LinkedIn</option>
+        <option value="youtube">YouTube</option>
+      </select>
 
             <input
               type="text"
@@ -288,7 +315,7 @@ export default function CompanyForm() {
 
         <button
           onClick={addSocial}
-          className="bg-green-500 text-white px-4 py-2 rounded"
+          className="bg-green-500 text-white px-4 py-2 rounded mb-5"
         >
           + Add Social Link
         </button>

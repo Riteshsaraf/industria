@@ -1,25 +1,31 @@
-export default function BranchesSection() {
-  const branches = [
-    {
-      city: 'LONDON',
-      email: 'london@example.com',
-      phone: '+44 123 456 789',
-      address: '221B Baker Street, London, UK',
-      address1: '221B Baker Street, London, UK',
-      map: 'https://www.google.com/maps?q=London&output=embed',
-    },
-    {
-      city: 'NEW YORK',
-      email: 'newyork@example.com',
-      phone: '+1 987 654 321',
-      address: '5th Avenue, New York, NY, USA',
-       address1: '5th Avenue, New York, NY, USA',
-      map: 'https://www.google.com/maps?q=New+York&output=embed',
-    },
-  ];
+'use client';
+
+import Image from "next/image";
+
+export default function BranchesSection({ branches }: { branches: any[] }) {
+  // const branches = [
+  //   {
+  //     city: 'LONDON',
+  //     email: 'london@example.com',
+  //     phone: '+44 123 456 789',
+  //     address: '221B Baker Street, London, UK',
+  //     address1: '221B Baker Street, London, UK',
+  //     map: 'https://www.google.com/maps?q=London&output=embed',
+  //   },
+  //   {
+  //     city: 'NEW YORK',
+  //     email: 'newyork@example.com',
+  //     phone: '+1 987 654 321',
+  //     address: '5th Avenue, New York, NY, USA',
+  //      address1: '5th Avenue, New York, NY, USA',
+  //     map: 'https://www.google.com/maps?q=New+York&output=embed',
+  //   },
+  // ];
+
+  console.log({ branches });
 
   return (
-    <section className="bg-black text-white py-16">
+    <section className="bg-black text-white py-16" id="branches">
       <div className="mx-auto max-w-7xl px-4">
         
        
@@ -37,30 +43,53 @@ export default function BranchesSection() {
               </h2>
 
               {/* Contact Info */}
-              <div className="space-y-2 text-gray-300 mb-4">
+              <div className="relative space-y-2 text-gray-300 mb-4">
                 <p>
                   📧 {branch.email}
                 </p>
                 <p>
-                  📞 {branch.phone}
+                  📞 {branch.contact}
+
+                  {
+                  index==1 && (
+                    <Image
+                      src={"/images/sticker.png"}
+                      alt="branch sticker"
+                      width={100}
+                      height={100}
+                      className="absolute top-20 z-10 right-0"
+                    />
+                  ) 
+                }
                 </p>
               </div>
 
               {/* Address */}
               <p className="text-gray-400 mb-4">
                 {branch.address}
+
+                
                 <br/>
                 {branch.address1}
+
+                
               </p>
+
+              
               
               {/* Map */}
-              <div className="w-full h-84 overflow-hidden rounded-md border border-gray-800">
+              <div className="relative w-full h-84 overflow-hidden rounded-md border border-gray-800">
                 <iframe
-                  src={branch.map}
+                  src={branch.map || `https://www.google.com/maps?q=${branch.name}&output=embed`}
                   className="w-full h-full border-0"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
+
+
+              
+
+               
               </div>
             </div>
           ))}

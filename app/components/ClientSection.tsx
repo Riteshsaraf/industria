@@ -22,7 +22,7 @@ interface ClientsSectionProps {
   clients: Client[];
 }
 
-export default function ClientsSection({ clients }: ClientsSectionProps) {
+export default function ClientsSection({ clients, description }: ClientsSectionProps & { description: string }) {
 
   const [images, setImages] = useState<Client[]>([]);
 
@@ -43,15 +43,13 @@ export default function ClientsSection({ clients }: ClientsSectionProps) {
 
         {/* Description */}
         <p className="mx-auto text-xl  mb-10 max-w-2xl text-gray-400">
-          Industria Studios is a content creation and multimedia marketing agency working
-          with internationally renowned clients to create and execute global campaigns
-          across social, digital, print, audio and video production.
+          {description}
 
-          {/* {process.env.BACKEND_API_URL} */}
+          {/* {process.env.NEXT_PUBLIC_API_URL} */}
         </p>
 
         {/* Logos grid */}
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-center">
+        {/* <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 items-center">
           {images.map((client) => (
             <div
               key={client.id}
@@ -67,7 +65,33 @@ export default function ClientsSection({ clients }: ClientsSectionProps) {
               
             </div>
           ))}
-        </div>
+        </div> */}
+
+          <section className="bg-black py-12 px-6">
+      <div
+        className="
+          grid 
+          grid-cols-[repeat(auto-fit,minmax(120px,1fr))] 
+          gap-8 
+          items-center
+        "
+      >
+        {images.map((client) => (
+          <div
+            key={client.id}
+            className="flex justify-center items-center opacity-80 hover:opacity-100 transition"
+          >
+            <Image
+              src={client.image}
+              alt={client.title}
+              width={120}
+              height={60}
+              className="object-contain max-h-[40px] w-auto"
+            />
+          </div>
+        ))}
+      </div>
+    </section>
       </div>
     </section>
   );

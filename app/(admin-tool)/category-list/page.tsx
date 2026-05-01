@@ -223,7 +223,7 @@ export default function CategoryListPage() {
                                 <tr key={u.tesT_ID} className="border-t border-gray-300 hover:bg-gray-50 text-sm">
                                         {/*<td className="px-4 py-3">{u.tesT_ID}</td>*/}
                                         <td className="px-4 py-3 w-[250px]">{u.name}</td>
-                                        <td className="px-4 py-3">{u.parentId}</td>
+                                        <td className="px-4 py-3">{u.parentCategoryName}</td>
                                        
                                         <td className="px-4 py-3">{u.description}</td>
                                         <td className="px-4 py-3">{u.slug}</td>

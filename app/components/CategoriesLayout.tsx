@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import ClientHeader from "./ClientHeader";
 import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
@@ -12,57 +12,14 @@ type Category = {
 };
 
 type Props = {
-  activeId?: string; // 👈 optional
+  activeId?: string; // 👈 optional,
+  categories: Category[]
 };
 
-  const categories = [
-    {
-        "id" :1,
-        "name": "PRODUCTION",
-        "subCategories" : [
-            {"id": 1, "name" : "BTS"},
-            {"id": 2, "name" : "CONTENT DAYS"},
-            {"id": 3, "name" : "JUNKETS"},
-            {"id": 4, "name" : "EVENTS"},
-            {"id": 5, "name" : "PODCASTS"}
-        ],
-        open: true
-    },
-    {
-         "id" :2,
-        "name": "DIGITAL/SOCIAL",
-        "subCategories": [],
-        open: false
-    },
-   {
-     "id" :3,
-         "name" : "CREATORS",
-         "subCategories": [],
-         open: false
-   },
-   {
-     "id" :4,
-        "name" : "TRAILERS",
-        "subCategories": [],
-        open: false
-   },
-   {
-        "id" :5,
-        "name" : "PHYSICAL MEDIA",
-        "subCategories": [],
-        open: false
-   },
-   {
-        "id" :6,
-        "name" : "ORIGINALS",
-        "subCategories": [],
-        open: false
-   },
-  ]
-
-export default function CategoryLayoutSection({ activeId = "1" }: Props) {
+ 
+export default function CategoryLayoutSection({ activeId = "bts", categories }: Props) {
     const [allCategories, setAllCategories] = useState<Category[]>(categories);
-    const [activeCategory, setActiveCategory] =  useState<Category>(categories[0]);
+    const [activeCategory, setActiveCategory] =  useState<Category>({} as Category);
    
     const setOpen = (index:number, open:boolean)=>{
           setAllCategories((prev)=>
@@ -71,6 +28,13 @@ export default function CategoryLayoutSection({ activeId = "1" }: Props) {
             )
           );
     }
+
+    useEffect(() => { 
+
+      
+        setAllCategories(categories);
+        //setActiveCategory(categories[0]);
+    }, [categories]);
      
   return (
     

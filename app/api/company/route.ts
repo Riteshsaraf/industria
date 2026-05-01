@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import { NextResponse } from "next/server";
 
-const backendUrl = process.env.BACKEND_API_URL;
+const backendUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function POST(req: Request) {
     try {
