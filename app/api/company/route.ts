@@ -47,7 +47,7 @@ export async function POST(req: Request) {
 
 
 
-export async function GET(req: Request, context: { params: { id: string } | Promise<{ id: string }> }) {
+export async function GET(req: Request ) {
     try {
 
         // If params is a Promise, unwrap it

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import SmartReq_logo from "@/public/SmartReq_logo.png";
+// import SmartReq_logo from "@/public/SmartReq_logo.png";
 
 interface NavBarProps {
   userName?: string;
@@ -44,7 +44,7 @@ export default function NavBar({children, userName, onLogout, routeLink}: NavBar
               <nav className="fixed top-0 left-0  w-full h-14 px-2 py-2 bg-black flex items-center justify-between border-b border-gray-300">
           <Link href={routeLink} className="relative flex items-center">
             <img
-              src={SmartReq_logo.src}
+              // src={SmartReq_logo.src}
               className="h-13 w-auto object-contain"
               alt="SmartReqBynext tool"
             />

@@ -34,7 +34,7 @@ export default function ContentPage() {
 
      <ClientHeader/>
 
-     <CategorySection gridLayout/>
+     <CategorySection/>
 
       {/* Grid Section */}
       <section className="p-2 md:p-2 border-b border-gray-100">

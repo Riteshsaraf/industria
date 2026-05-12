@@ -6,7 +6,7 @@ import {
   AccordionContent,
 } from "@/app/components/Accordion";
 
-import SmartReq_logo from "@/public/SmartReq_logo.png";
+// import SmartReq_logo from "@/public/SmartReq_logo.png";
 import { getFaqs } from "@/app/services/getFaqService";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
@@ -24,7 +24,7 @@ export default async function FAQPage() {
         {/* Logo */}
         <a href="/" className="relative flex items-center">
           <img
-            src={SmartReq_logo.src}
+            // src={SmartReq_logo.src}
             className="h-20 w-auto object-contain"
             alt="SmartReqBynext tool"
           />

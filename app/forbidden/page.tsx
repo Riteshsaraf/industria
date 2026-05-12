@@ -1,8 +1,8 @@
-import { StatusPageLayout } from "@/app/components/StatusPageLayout";
+// import { StatusPageLayout } from "@/app/components/StatusPageLayout";
 
 export default function ForbiddenPage() {
   return (
-    <StatusPageLayout>
+    <>
       <h1 className="text-[32px] leading-tight font-medium">
         Unauthorized access.
       </h1>
@@ -22,6 +22,6 @@ export default function ForbiddenPage() {
           <br /> if you have any questions or require assistance.
         </p>
       </div>
-    </StatusPageLayout>
+    </>
   );
 }

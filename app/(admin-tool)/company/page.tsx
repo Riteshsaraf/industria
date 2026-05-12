@@ -30,7 +30,7 @@ export default function CompanyForm() {
 
   // -------- Dynamic Fields --------
   const [branches, setBranches] = useState<Branch[]>([
-    { name: '', address: '', contact: '' },
+    { name: '', address1: '', address2: '', contact: '', email: '' },
   ]);
 
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>([
@@ -51,7 +51,7 @@ export default function CompanyForm() {
 
   // -------- Branch Handlers --------
   const addBranch = () => {
-    setBranches([...branches, { name: '', address: '', contact: '' }]);
+    setBranches([...branches, { name: '', address1: '', address2:'', contact: '', email: '' }]);
   };
 
   const removeBranch = (index: number) => {

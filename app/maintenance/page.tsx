@@ -1,9 +1,9 @@
-import { StatusPageLayout } from "@/app/components/StatusPageLayout";
+// import { StatusPageLayout } from "@/app/components/StatusPageLayout";
 
 export default function MaintenancePage() {
   return (
-    <StatusPageLayout>
-      <h1 className="text-[32px] leading-tight font-medium">
+    <>
+       <h1 className="text-[32px] leading-tight font-medium">
         The next tool is temporarily unavailable.
       </h1>
       <div className="flex flex-col text-medium text-black">
@@ -24,6 +24,6 @@ export default function MaintenancePage() {
           Thank you for your understanding.
         </p>
       </div>
-    </StatusPageLayout>
+    </>
   );
 }

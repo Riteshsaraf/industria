@@ -12,9 +12,16 @@ import {
 } from "lucide-react";
 
 
+
+type SocialLink = {
+  type: string;
+  url: string;
+};
+
+
 export default function ClientHeader() {
   const [open, setOpen] = useState(false);
-  const [socialLinks, setSocialLinks] = useState([]);
+  const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
 
   useEffect(() => {
     const companyInfo = localStorage.getItem('companyInfo');
