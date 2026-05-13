@@ -4,6 +4,7 @@ import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
 
 
+
 type Category = {
   id: number;
   name: string;
