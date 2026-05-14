@@ -87,6 +87,7 @@ export default function CompanyForm() {
     setSocialLinks(updated);
   };
 
+
   // -------- Submit --------
   const handleSubmit = async () => {
     const payload = {
@@ -99,20 +100,31 @@ export default function CompanyForm() {
 
     console.log(payload);
 
-    const res = await fetch("/api/company", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
+    try{
 
-    const result = await res.json();
+      setLoading(true);
 
-    if (!res.ok) {
-        throw new Error(result.message || "Something went wrong");
+      const res = await fetch("/api/company", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(payload),
+              });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+          throw new Error(result.message || "Something went wrong");
+      }
+
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000); // hide after 3s
     }
-
-    setSuccess(true);
-    setTimeout(() => setSuccess(false), 3000); // hide after 3s
+    catch(err){
+      console.log(err);
+    }
+    finally{
+       setLoading(false);
+    }
   };
 
 
@@ -324,7 +336,7 @@ export default function CompanyForm() {
       {/* -------- Submit -------- */}
       <button
         onClick={handleSubmit}
-        className="w-full bg-black text-white py-3 rounded"
+        className="w-full bg-black text-white py-3 rounded cursor-pointer hover:bg-gray-500 transition"
       >
         Submit Company
       </button>

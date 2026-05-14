@@ -66,7 +66,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                              <span>Welcome {user?.name}</span>
                           </>
                       ) : (
-                         <span>Not logged in</span>
+                         <span>Admin</span>
                      )}
 
                       {/* Arrow */}

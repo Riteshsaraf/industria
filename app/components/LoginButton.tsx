@@ -4,6 +4,8 @@ import { useAuth } from "@/context/AdminAuthContext";
 import logo from "@/public/next.svg";
 import { LoginRequest } from "@/app/types/userAuth";
 import { useState } from "react";
+import Image from "next/image";
+
 
 export default function LoginButton() {
     // const { login } = useAuth();
@@ -51,7 +53,13 @@ export default function LoginButton() {
         <div className="w-full max-w-[400px] mx-auto w-1/2 flex flex-col space-y-5 shrink-0 justify-center  items-center p-10 rounded-lg border border-gray-300 shadow-lg">
           {/* WELCOME TEXT */}
           <div className="space-y-5">
-            <img src={logo} alt="Logo" className="w-16" />
+            <Image
+                                  src={"/images/sticker.png"}
+                                  alt="branch sticker"
+                                  width={100}
+                                  height={100}
+                                  className=""
+                                />
           </div>
 
           {/* LOGIN SECTION */}
